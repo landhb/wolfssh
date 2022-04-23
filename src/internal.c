@@ -1592,8 +1592,10 @@ static int GetInputText(WOLFSSH* ssh, byte** pEol)
     int inSz = 255;
     int in;
     char *eol;
+    int usedLength;
 
-    if (GrowBuffer(&ssh->inputBuffer, inSz, 0) < 0)
+    usedLength = ssh->inputBuffer.length - ssh->inputBuffer.idx;
+    if (GrowBuffer(&ssh->inputBuffer, inSz, usedLength) < 0)
         return WS_MEMORY_E;
 
     do {
